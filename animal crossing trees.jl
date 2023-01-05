@@ -31,14 +31,26 @@ end
 
 # lets create a tree
 randomTree = Tree()
-println("This tree has $(randomTree.num_branches) branches.\n")
+println("This tree has $(randomTree.num_branches) branches.")
+print("Do you want to shake the tree to get its branches? \ntype y\\n: ")
+start_shaking = readline()
 
-while getNumBranches(randomTree) > 0
-    branches_dropped = shake!(randomTree)
-    if branches_dropped > 0
-        println("You got a branch!")
-    else
-        println("You didn't get any branches...")
+if start_shaking == "y"
+    # shake the tree!
+    while getNumBranches(randomTree) > 0
+        branches_dropped = shake!(randomTree)
+        if branches_dropped > 0
+            println("You got a branch!\n")
+        else
+            println("You didn't get any branches...\n")
+        end
+        
+        print("Press the Enter key to shake the tree again!: ")
+        readline()
     end
+
+    println("\nThis tree doesn't have any more branches.")
+
+else
+    println("\nYou didn't want to shake the tree...")
 end
-println("This tree doesn't have any more branches.")
