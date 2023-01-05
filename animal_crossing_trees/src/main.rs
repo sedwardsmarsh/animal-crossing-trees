@@ -7,7 +7,7 @@ use rand::{thread_rng, Rng, rngs::ThreadRng};
 
 
 // define the random number generator
-fn createRng() -> ThreadRng {
+fn create_rng() -> ThreadRng {
     let mut rng: ThreadRng = thread_rng();
     return rng
 }
@@ -17,24 +17,26 @@ struct Tree {
     num_branches: u8
 }
 
-
 impl Tree {
     fn new() -> Self {
-        let mut rng: ThreadRng = createRng();
+        let mut rng: ThreadRng = create_rng();
         let new_num_branches: u8 = rng.gen_range(1..=5);
         return Self{num_branches: new_num_branches};
     }
 
-    // fn shake(&mut self) -> u8 {
-    //     // create our random number generator
-    //     let mut rng: ThreadRng = createRng();
-    //     let dice_roll: f64 = rng.gen::<f64>();
-    //     if dice_roll > 0.65 {
-    //         self
-    //     }
-    // }
+    fn shake(&mut self) -> u8 {
+        // create our random number generator
+        let mut rng: ThreadRng = create_rng();
+        let dice_roll: f64 = rng.gen::<f64>();
+        if dice_roll > 0.65 {
+            self.num_branches -= 1;
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
-    fn getNumBranches(&self) -> u8 {
+    fn get_num_branches(&self) -> u8 {
         return self.num_branches;
     }
 }
@@ -43,5 +45,9 @@ impl Tree {
 fn main() {
     // lets create a new tree and see how many branches it has!
     let mut fresh_tree: Tree = Tree::new();
-    println!("This tree has {} branches.", fresh_tree.getNumBranches());
+    println!("This tree has {} branches.", fresh_tree.get_num_branches());
+
+    // now lets shake this tree!
+    let dropped_branches: u8 = fresh_tree.shake();
+    println!("The tree dropped {dropped_branches} branches");
 }
